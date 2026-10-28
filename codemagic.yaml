@@ -2,7 +2,8 @@ workflows:
   flutter-workflow:
     name: Flutter Android Build
     instance_type: mac_mini_m1
-    flutter: stable
+    environment:
+      flutter: stable
     scripts:
       - name: Get Flutter packages
         script: flutter pub get
