@@ -2,9 +2,6 @@ workflows:
   android-native:
     name: Android Native Build
     instance_type: mac_mini_m1
-    environment:
-      android_signing:
-        - reference_name: keystore_ref # যদি সাইনিং কি না থাকে তবে এই অংশটি বাদ দিতে পারেন
     scripts:
       - name: Build Android Release APK
         script: |
@@ -12,3 +9,4 @@ workflows:
           ./gradlew assembleRelease
     artifacts:
       - app/build/outputs/apk/release/*.apk
+      
