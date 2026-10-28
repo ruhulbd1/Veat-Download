@@ -1,15 +1,13 @@
 workflows:
-  flutter-workflow:
-    name: Flutter Android Build
+  android-native-workflow:
+    name: Android Native Workflow
     instance_type: mac_mini_m1
-    environment:
-      flutter: stable
     scripts:
-      - name: Get Flutter packages
-        working_directory: my_project # যদি সাব-ফোল্ডারে থাকে তবে ফোল্ডারের নাম দিন, না থাকলে এই লাইনটি বাদ দিন
-        script: flutter pub get
-      - name: Build APK
-        working_directory: my_project
-        script: flutter build apk --release
+      - name: Grant execute permission for gradlew
+        script: |
+          chmod +x gradlew
+      - name: Build Android Release APK
+        script: |
+          ./gradlew assembleRelease
     artifacts:
-      - '**/build/app/outputs/flutter-apk/*.apk'
+      - app/build/outputs/apk/release/*.apk
