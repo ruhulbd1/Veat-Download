@@ -3,17 +3,10 @@ workflows:
     name: Android Native Workflow
     instance_type: mac_mini_m1
     scripts:
-      - name: Set Gradle Version and Build APK
+      - name: Build Android APK using System Gradle
         script: |
-          # প্রজেক্টের গ্রেডল র‍্যাপার ভার্সন সুনির্দিষ্ট করে দেওয়া
-          echo "distributionBase=GRADLE_USER_HOME" > gradle/wrapper/gradle-wrapper.properties
-          echo "distributionPath=wrapper/dists" >> gradle/wrapper/gradle-wrapper.properties
-          echo "distributionUrl=https\://services.gradle.org/distributions/gradle-8.3.1-bin.zip" >> gradle/wrapper/gradle-wrapper.properties
-          echo "zipStoreBase=GRADLE_USER_HOME" >> gradle/wrapper/gradle-wrapper.properties
-          echo "zipStorePath=wrapper/dists" >> gradle/wrapper/gradle-wrapper.properties
-          
-          chmod +x gradlew
-          ./gradlew assembleRelease
+          # সিস্টেমের ডিফল্ট গ্রেডল ব্যবহার করে সরাসরি রিলিজ এপিকে বিল্ড করা
+          gradle assembleRelease
     artifacts:
       - app/build/outputs/apk/release/*.apk
       - '**/build/outputs/apk/release/*.apk'
