@@ -1,12 +1,12 @@
 workflows:
-  android-native:
-    name: Android Native Build
+  flutter-workflow:
+    name: Flutter Android Build
     instance_type: mac_mini_m1
+    flutter: stable
     scripts:
-      - name: Build Android Release APK
-        script: |
-          chmod +x gradlew
-          ./gradlew assembleRelease
+      - name: Get Flutter packages
+        script: flutter pub get
+      - name: Build APK
+        script: flutter build apk --release
     artifacts:
-      - app/build/outputs/apk/release/*.apk
-      
+      - build/app/outputs/flutter-apk/*.apk
