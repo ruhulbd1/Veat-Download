@@ -6,8 +6,10 @@ workflows:
       flutter: stable
     scripts:
       - name: Get Flutter packages
+        working_directory: my_project # যদি সাব-ফোল্ডারে থাকে তবে ফোল্ডারের নাম দিন, না থাকলে এই লাইনটি বাদ দিন
         script: flutter pub get
       - name: Build APK
+        working_directory: my_project
         script: flutter build apk --release
     artifacts:
-      - build/app/outputs/flutter-apk/*.apk
+      - '**/build/app/outputs/flutter-apk/*.apk'
