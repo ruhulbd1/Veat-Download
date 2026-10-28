@@ -3,15 +3,17 @@ workflows:
     name: Android Native Workflow
     instance_type: mac_mini_m1
     scripts:
-      - name: Build Android Release APK with Gradle
+      - name: Set Gradle Version and Build APK
         script: |
-          # যদি gradlew না থাকে তবে সরাসরি সিস্টেম gradle অথবা gradlew দিয়ে বিল্ড করার চেষ্টা করবে
-          if [ -f "./gradlew" ]; then
-            chmod +x gradlew
-            ./gradlew assembleRelease
-          else
-            gradle assembleRelease
-          fi
+          # প্রজেক্টের গ্রেডল র‍্যাপার ভার্সন সুনির্দিষ্ট করে দেওয়া
+          echo "distributionBase=GRADLE_USER_HOME" > gradle/wrapper/gradle-wrapper.properties
+          echo "distributionPath=wrapper/dists" >> gradle/wrapper/gradle-wrapper.properties
+          echo "distributionUrl=https\://services.gradle.org/distributions/gradle-8.3.1-bin.zip" >> gradle/wrapper/gradle-wrapper.properties
+          echo "zipStoreBase=GRADLE_USER_HOME" >> gradle/wrapper/gradle-wrapper.properties
+          echo "zipStorePath=wrapper/dists" >> gradle/wrapper/gradle-wrapper.properties
+          
+          chmod +x gradlew
+          ./gradlew assembleRelease
     artifacts:
       - app/build/outputs/apk/release/*.apk
       - '**/build/outputs/apk/release/*.apk'
