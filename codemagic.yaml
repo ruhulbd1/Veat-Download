@@ -3,12 +3,10 @@ workflows:
     name: Android Native Workflow
     instance_type: mac_mini_m1
     scripts:
-      - name: Setup Gradle Wrapper and Build APK
+      - name: Build APK directly with System Gradle
         script: |
-          # সঠিক গ্রেডল র‍্যাপার জেনারেট করা যাতে ভার্সন মিসম্যাচ না হয়
-          gradle wrapper --gradle-version 8.3.1
-          chmod +x gradlew
-          ./gradlew assembleRelease
+          # রুট ফোল্ডারে gradle কমান্ড দিয়ে সরাসরি রিলিজ এপিকে বিল্ড করা
+          gradle assembleRelease
     artifacts:
       - app/build/outputs/apk/release/*.apk
       - '**/build/outputs/apk/release/*.apk'
