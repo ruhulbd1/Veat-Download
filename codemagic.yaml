@@ -3,13 +3,17 @@ workflows:
     name: Android Native Workflow
     instance_type: mac_mini_m1
     scripts:
-      - name: Install Correct Gradle 9.3.1 and Build Debug APK
+      - name: Generate Keystore and Build Debug APK
         script: |
+          # সঠিক গ্রেডল ৯.৩.১ ইনস্টল করা
           wget https://services.gradle.org/distributions/gradle-9.3.1-bin.zip
           unzip -q gradle-9.3.1-bin.zip
           export PATH=$PWD/gradle-9.3.1/bin:$PATH
           
-          # রিলিজের বদলে ডিবাগ এপিকে বিল্ড করা (সাইনিং ফাইলের ঝামেলা ছাড়াই)
+          # ডিবাগ কি-স্টোর ফাইল অটোমেটিক জেনারেট করা যাতে সাইনিং এরর না আসে
+          keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          
+          # ডিবাগ এপিকে বিল্ড করা
           gradle assembleDebug
     artifacts:
       - app/build/outputs/apk/debug/*.apk
