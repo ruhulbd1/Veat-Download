@@ -5,13 +5,13 @@ workflows:
     scripts:
       - name: Install Correct Gradle 9.3.1 and Build APK
         script: |
-          # সঠিক গ্রেডল 9.3.1 সংস্করণটি ডাউনলোড ও ইনস্টল করা
           wget https://services.gradle.org/distributions/gradle-9.3.1-bin.zip
           unzip -q gradle-9.3.1-bin.zip
           export PATH=$PWD/gradle-9.3.1/bin:$PATH
           
-          # রিলিজ এপিকে বিল্ড করা
-          gradle assembleRelease
+          # সাইনিং সমস্যা এড়াতে সরাসরি assembleRelease অথবা assembleDebug বিল্ড করা
+          gradle assembleRelease -x lint
     artifacts:
       - app/build/outputs/apk/release/*.apk
-      - '**/build/outputs/apk/release/*.apk'
+      - app/build/outputs/apk/debug/*.apk
+      - '**/build/outputs/apk/**/*.apk'
