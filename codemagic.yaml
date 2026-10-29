@@ -3,14 +3,8 @@ workflows:
     name: Android Native Workflow
     instance_type: mac_mini_m1
     scripts:
-      - name: Install Correct Gradle 8.3.1 and Build APK
+      - name: Build APK with System Gradle
         script: |
-          # সঠিক গ্রেডল 8.3.1 সংস্করণটি ডাউনলোড এবং আনজিপ করে ইনস্টল করা
-          wget https://services.gradle.org/distributions/gradle-8.3.1-bin.zip
-          unzip -q gradle-8.3.1-bin.zip
-          export PATH=$PWD/gradle-8.3.1/bin:$PATH
-          
-          # সঠিক গ্রেডল দিয়ে রিলিজ এপিকে বিল্ড করা
           gradle assembleRelease
     artifacts:
       - app/build/outputs/apk/release/*.apk
