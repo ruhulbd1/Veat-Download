@@ -3,9 +3,14 @@ workflows:
     name: Android Native Workflow
     instance_type: mac_mini_m1
     scripts:
-      - name: Direct Build with System Gradle
+      - name: Install Correct Gradle 9.3.1 and Build APK
         script: |
-          # কোডম্যাজিকের নিজস্ব সিস্টেম গ্রেডল দিয়ে সরাসরি এপিকে বিল্ড করা
+          # সঠিক গ্রেডল 9.3.1 সংস্করণটি ডাউনলোড ও ইনস্টল করা
+          wget https://services.gradle.org/distributions/gradle-9.3.1-bin.zip
+          unzip -q gradle-9.3.1-bin.zip
+          export PATH=$PWD/gradle-9.3.1/bin:$PATH
+          
+          # রিলিজ এপিকে বিল্ড করা
           gradle assembleRelease
     artifacts:
       - app/build/outputs/apk/release/*.apk
