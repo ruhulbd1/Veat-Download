@@ -3,15 +3,14 @@ workflows:
     name: Android Native Workflow
     instance_type: mac_mini_m1
     scripts:
-      - name: Install Correct Gradle 9.3.1 and Build APK
+      - name: Install Correct Gradle 9.3.1 and Build Debug APK
         script: |
           wget https://services.gradle.org/distributions/gradle-9.3.1-bin.zip
           unzip -q gradle-9.3.1-bin.zip
           export PATH=$PWD/gradle-9.3.1/bin:$PATH
           
-          # সাইনিং সমস্যা এড়াতে সরাসরি assembleRelease অথবা assembleDebug বিল্ড করা
-          gradle assembleRelease -x lint
+          # রিলিজের বদলে ডিবাগ এপিকে বিল্ড করা (সাইনিং ফাইলের ঝামেলা ছাড়াই)
+          gradle assembleDebug
     artifacts:
-      - app/build/outputs/apk/release/*.apk
       - app/build/outputs/apk/debug/*.apk
-      - '**/build/outputs/apk/**/*.apk'
+      - '**/build/outputs/apk/debug/*.apk'
